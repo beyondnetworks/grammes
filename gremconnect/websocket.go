@@ -22,8 +22,9 @@ package gremconnect
 
 import (
 	"errors"
+	"fmt"
+	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strings"
 	"sync"
 	"time"
@@ -38,7 +39,6 @@ type WebSocket struct {
 	address           string
 	conn              *websocket.Conn
 	auth              *Auth
-	httpAuth		  *HTTPAuth
 	disposed          bool
 	connected         bool
 	enableCompression bool
@@ -82,22 +82,35 @@ func (ws *WebSocket) Connect() error {
 		}
 	}
 
-	ws.conn, _, err = dialer.Dial(ws.address, http.Header{})
+	var httpResponse *http.Response
+	ws.conn, httpResponse, err = dialer.Dial(ws.address, http.Header{})
+	if err != nil {
+		if httpResponse != nil {
+			//noinspection GoUnhandledErrorResult
+			defer httpResponse.Body.Close()
 
-	if err == nil {
-		ws.connected = true
-
-		handler := func(appData string) error {
-			ws.Lock()
-			ws.connected = true
-			ws.Unlock()
-			return nil
+			// Try to read the http response to add context to the error
+			errorOutput, readErr := ioutil.ReadAll(httpResponse.Body)
+			if readErr == nil {
+				return fmt.Errorf("error connecting to address. response: %s. error %v", string(errorOutput), err)
+			}
 		}
 
-		ws.conn.SetPongHandler(handler)
+		return err
 	}
 
-	return err
+	ws.connected = true
+
+	handler := func(appData string) error {
+		ws.Lock()
+		ws.connected = true
+		ws.Unlock()
+		return nil
+	}
+
+	ws.conn.SetPongHandler(handler)
+
+	return nil
 }
 
 // IsConnected returns whether the given
@@ -194,10 +207,6 @@ func (ws *WebSocket) Ping(errs chan error) {
 // SetAuth will set the authentication to this user and pass
 func (ws *WebSocket) SetAuth(user, pass string) {
 	ws.auth = &Auth{Username: user, Password: pass}
-}
-
-func (ws *WebSocket) SetHTTPAuth(provider AuthProvider) {
-	ws.httpAuth = &HTTPAuth{provider}
 }
 
 // SetTimeout will set the dialing timeout
