@@ -25,6 +25,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"sync"
 	"time"
@@ -39,6 +40,7 @@ type WebSocket struct {
 	address           string
 	conn              *websocket.Conn
 	auth              *Auth
+	httpAuth		  *HTTPAuth
 	disposed          bool
 	connected         bool
 	enableCompression bool
@@ -207,6 +209,11 @@ func (ws *WebSocket) Ping(errs chan error) {
 // SetAuth will set the authentication to this user and pass
 func (ws *WebSocket) SetAuth(user, pass string) {
 	ws.auth = &Auth{Username: user, Password: pass}
+}
+
+// SetHTTPAuth will set the HTTP authentication provider to this one
+func (ws *WebSocket) SetHTTPAuth(provider AuthProvider) {
+	ws.httpAuth = &HTTPAuth{provider}
 }
 
 // SetTimeout will set the dialing timeout
