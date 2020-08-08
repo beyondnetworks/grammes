@@ -129,15 +129,15 @@ func (m *mockDialerStruct) GetQuit() chan struct{} {
 	return m.quit
 }
 func (*mockDialerStruct) SetHTTPAuth(gremconnect.AuthProvider) {}
-func (*mockDialerStruct) SetAuth(string, string)            {}
-func (*mockDialerStruct) SetTimeout(time.Duration)          {}
-func (*mockDialerStruct) SetPingInterval(time.Duration)     {}
-func (*mockDialerStruct) SetWritingWait(time.Duration)      {}
-func (*mockDialerStruct) SetReadingWait(time.Duration)      {}
-func (*mockDialerStruct) SetWriteBufferSize(int)            {}
-func (*mockDialerStruct) SetReadBufferSize(int)             {}
-func (*mockDialerStruct) SetHandshakeTimeout(time.Duration) {}
-func (*mockDialerStruct) SetCompression(bool)               {}
+func (*mockDialerStruct) SetAuth(string, string)               {}
+func (*mockDialerStruct) SetTimeout(time.Duration)             {}
+func (*mockDialerStruct) SetPingInterval(time.Duration)        {}
+func (*mockDialerStruct) SetWritingWait(time.Duration)         {}
+func (*mockDialerStruct) SetReadingWait(time.Duration)         {}
+func (*mockDialerStruct) SetWriteBufferSize(int)               {}
+func (*mockDialerStruct) SetReadBufferSize(int)                {}
+func (*mockDialerStruct) SetHandshakeTimeout(time.Duration)    {}
+func (*mockDialerStruct) SetCompression(bool)                  {}
 
 func mockDial(conn gremconnect.Dialer, cfgs ...ClientConfiguration) (*Client, error) {
 	c := setupClient()
@@ -164,15 +164,15 @@ func (m *mockDialerWriteError) GetQuit() chan struct{} {
 	return m.Quit
 }
 func (*mockDialerWriteError) SetHTTPAuth(gremconnect.AuthProvider) {}
-func (*mockDialerWriteError) SetAuth(string, string)                {}
-func (*mockDialerWriteError) SetTimeout(time.Duration)              {}
-func (*mockDialerWriteError) SetPingInterval(time.Duration)     	{}
-func (*mockDialerWriteError) SetWritingWait(time.Duration)      	{}
-func (*mockDialerWriteError) SetReadingWait(time.Duration)      	{}
-func (*mockDialerWriteError) SetWriteBufferSize(int)            	{}
-func (*mockDialerWriteError) SetReadBufferSize(int)             	{}
-func (*mockDialerWriteError) SetHandshakeTimeout(time.Duration) 	{}
-func (*mockDialerWriteError) SetCompression(bool)               	{}
+func (*mockDialerWriteError) SetAuth(string, string)               {}
+func (*mockDialerWriteError) SetTimeout(time.Duration)             {}
+func (*mockDialerWriteError) SetPingInterval(time.Duration)        {}
+func (*mockDialerWriteError) SetWritingWait(time.Duration)         {}
+func (*mockDialerWriteError) SetReadingWait(time.Duration)         {}
+func (*mockDialerWriteError) SetWriteBufferSize(int)               {}
+func (*mockDialerWriteError) SetReadBufferSize(int)                {}
+func (*mockDialerWriteError) SetHandshakeTimeout(time.Duration)    {}
+func (*mockDialerWriteError) SetCompression(bool)                  {}
 
 type mockDialerAuthError gremconnect.WebSocket
 
@@ -194,8 +194,8 @@ func (m *mockDialerAuthError) GetQuit() chan struct{} {
 	return m.Quit
 }
 func (*mockDialerAuthError) SetHTTPAuth(gremconnect.AuthProvider) {}
-func (*mockDialerAuthError) SetAuth(string, string)            	  {}
-func (*mockDialerAuthError) SetTimeout(time.Duration)          	  {}
+func (*mockDialerAuthError) SetAuth(string, string)               {}
+func (*mockDialerAuthError) SetTimeout(time.Duration)             {}
 func (*mockDialerAuthError) SetPingInterval(time.Duration)        {}
 func (*mockDialerAuthError) SetWritingWait(time.Duration)         {}
 func (*mockDialerAuthError) SetReadingWait(time.Duration)         {}
@@ -224,7 +224,7 @@ func (m *mockDialerReadError) GetQuit() chan struct{} {
 	return m.Quit
 }
 func (*mockDialerReadError) SetHTTPAuth(gremconnect.AuthProvider) {}
-func (*mockDialerReadError) SetAuth(string, string)            	  {}
+func (*mockDialerReadError) SetAuth(string, string)               {}
 func (*mockDialerReadError) SetTimeout(time.Duration)             {}
 func (*mockDialerReadError) SetPingInterval(time.Duration)        {}
 func (*mockDialerReadError) SetWritingWait(time.Duration)         {}

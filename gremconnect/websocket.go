@@ -40,7 +40,7 @@ type WebSocket struct {
 	address           string
 	conn              *websocket.Conn
 	auth              *Auth
-	httpAuth		  *HTTPAuth
+	httpAuth          *HTTPAuth
 	disposed          bool
 	connected         bool
 	enableCompression bool
