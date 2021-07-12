@@ -64,17 +64,18 @@ func PrepareRequest(query string, queryTimeout *time.Duration, bindings, rebindi
 	req.Args["bindings"] = bindings
 	req.Args["rebindings"] = rebindings
 
-	if sessionId != nil {
-		req.Args["session"] = sessionId.String()
-		req.Processor = "session"
-
-		if query == "" {
-			req.Op = "close"
-		}
-	}
-
 	if queryTimeout != nil {
 		req.Args["evaluationTimeout"] = queryTimeout.Milliseconds()
+	}
+
+	if sessionId != nil {
+		if query == "" {
+			req.Op = "close"
+			req.Args = make(map[string]interface{}) // Empty args if we're closing a session
+		}
+
+		req.Args["session"] = sessionId.String()
+		req.Processor = "session"
 	}
 
 	return
