@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/northwesternmutual/grammes/logging"
 	"github.com/northwesternmutual/grammes/query"
+	"github.com/northwesternmutual/grammes/query/traversal"
 )
 
 // sessionManager handles the sessions actions to the server.
@@ -43,5 +44,23 @@ func (s *session) ExecuteQuery(queryObj query.Query) (res [][]byte, err error) {
 
 func (s *session) Close() error {
 	_, err := s.e("", nil, map[string]string{}, map[string]string{}, &s.id)
+	return err
+}
+
+func (s *session) Commit() error {
+	commit := traversal.NewTraversal()
+	commit.AddStep("tx")
+	commit.AddStep("commit")
+
+	_, err := s.ExecuteQuery(commit)
+	return err
+}
+
+func (s *session) Rollback() error {
+	commit := traversal.NewTraversal()
+	commit.AddStep("tx")
+	commit.AddStep("rollback")
+
+	_, err := s.ExecuteQuery(commit)
 	return err
 }

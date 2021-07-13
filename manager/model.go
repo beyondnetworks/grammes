@@ -170,7 +170,11 @@ type Session interface {
 	ExecuteQuery(queryObj query.Query) (res [][]byte, err error)
 	// ExecuteStringQuery will execute a string query and return its raw result.
 	ExecuteStringQuery(stringQuery string) (res [][]byte, err error)
-	// Close
+	// Commit commits the transaction
+	Commit() (err error)
+	// Rollback rolls back the transaction
+	Rollback() (err error)
+	// Close closes the session, rolling back any uncommitted transactions
 	Close() (err error)
 }
 
