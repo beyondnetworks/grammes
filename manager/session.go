@@ -1,6 +1,7 @@
 package manager
 
 import (
+	"fmt"
 	"github.com/google/uuid"
 	"github.com/northwesternmutual/grammes/logging"
 	"github.com/northwesternmutual/grammes/query"
@@ -32,6 +33,29 @@ func (s *sessionManager) NewSession() Session {
 		e: s.e,
 		id: uuid.New(),
 	}
+}
+
+func (s *sessionManager) WithSession(f func(Session) error) error {
+	var err error
+	ss := s.NewSession()
+	defer func() {
+		err2 := ss.Close()
+		if err == nil { // Capture close error if everything else was ok
+			err = err2
+		}
+	}()
+
+	err = f(ss)
+	if err == nil {
+		err = ss.Commit()
+	} else {
+		err2 := ss.Rollback()
+		if err2 != nil { // Keep both errors
+			err = fmt.Errorf("error rolling back: %v, original error: %w", err2, err)
+		}
+	}
+
+	return err
 }
 
 func (s *session) ExecuteStringQuery(stringQuery string) (res [][]byte, err error) {

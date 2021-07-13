@@ -180,6 +180,7 @@ type Session interface {
 
 type SessionQuerier interface {
 	NewSession() Session
+	WithSession(f func(Session) error) error
 }
 
 // VertexQuerier handles the vertices on the graph.
