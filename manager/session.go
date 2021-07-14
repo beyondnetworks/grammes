@@ -81,10 +81,10 @@ func (s *session) Commit() error {
 }
 
 func (s *session) Rollback() error {
-	commit := traversal.NewTraversal()
-	commit.AddStep("tx")
-	commit.AddStep("rollback")
+	rollback := traversal.NewTraversal()
+	rollback.AddStep("tx")
+	rollback.AddStep("rollback")
 
-	_, err := s.ExecuteQuery(commit)
+	_, err := s.ExecuteQuery(rollback)
 	return err
 }
