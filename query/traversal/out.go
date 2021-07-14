@@ -22,26 +22,14 @@ package traversal
 
 // Out moves to the outgoing adjacent vertices given the edge labels.
 func (g String) Out(labels ...string) String {
-	var p []interface{}
-
-	for _, l := range labels {
-		p = append(p, l)
-	}
-
-	g.AddStep("out", p...)
+	g.addStepWithStrings("out", labels...)
 
 	return g
 }
 
 // OutE moves to the outgoing incident edges given the edge labels.
 func (g String) OutE(labels ...string) String {
-	var p []interface{}
-
-	for _, l := range labels {
-		p = append(p, l)
-	}
-
-	g.AddStep("outE", p...)
+	g.addStepWithStrings("outE", labels...)
 
 	return g
 }

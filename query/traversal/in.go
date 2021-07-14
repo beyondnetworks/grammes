@@ -22,38 +22,14 @@ package traversal
 
 // In moves to the incoming adjacent vertices given the edge labels
 func (g String) In(labels ...string) String {
-	g = g.append(".in(")
-
-	if len(labels) > 0 {
-		g = g.append("'" + labels[0] + "'")
-
-		if len(labels) > 1 {
-			for _, v := range labels[1:] {
-				g = g.append(",'" + v + "'")
-			}
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithStrings("in", labels...)
 
 	return g
 }
 
 // InE moves to the incoming incident edges given the edge labels.
 func (g String) InE(labels ...string) String {
-	g = g.append(".inE(")
-
-	if len(labels) > 0 {
-		g = g.append("'" + labels[0] + "'")
-
-		if len(labels) > 1 {
-			for _, v := range labels[1:] {
-				g = g.append(",'" + v + "'")
-			}
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithStrings("inE", labels...)
 
 	return g
 }

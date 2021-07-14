@@ -28,27 +28,7 @@ package traversal
 // ValueMap(bool, string...)
 // ValueMap(string...)
 func (g String) ValueMap(boolOrStrings ...interface{}) String {
-	if len(boolOrStrings) < 1 {
-		g.AddStep("valueMap") // empty command if there are no parameters given.
-		return g
-	}
-
-	// append the command beginning along with the first parameter value.
-	switch boolOrStrings[0].(type) {
-	case string:
-		g = g.append(".valueMap('" + boolOrStrings[0].(string) + "'")
-	default:
-		g = g.append(fmtStr(".valueMap(%v", boolOrStrings[0]))
-	}
-
-	// append the rest of the parameters
-	if len(boolOrStrings) > 1 {
-		for _, v := range boolOrStrings[1:] {
-			g = g.append(fmtStr(",'%v'", v))
-		}
-	}
-
-	g = g.append(")")
+	g.AddStep("valueMap", boolOrStrings...)
 
 	return g
 }

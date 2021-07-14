@@ -28,14 +28,7 @@ package traversal
 // AddE(string)
 // AddE(*String)
 func (g String) AddE(param interface{}) String {
-	switch param.(type) {
-	case String:
-		g = g.append(".addE(" + param.(String).Raw().String() + ")")
-	case string:
-		g = g.append(".addE('" + param.(string) + "')")
-	default:
-		g.AddStep("addE")
-	}
+	g.AddStep("addE", param)
 
 	return g
 }

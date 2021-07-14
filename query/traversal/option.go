@@ -36,15 +36,7 @@ func (g String) Option(params ...string) String {
 		fmt.Println("Too many paramaters to call Option()")
 	}
 
-	g = g.append(".option('" + params[0] + "'")
-
-	if len(params) > 1 {
-		for _, v := range params {
-			g = g.append(",'" + v + "'")
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithStrings("option", params...)
 
 	return g
 }

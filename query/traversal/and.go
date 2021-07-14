@@ -28,19 +28,7 @@ package traversal
 // And()
 // And(...*String (Traversal))
 func (g String) And(params ...String) String {
-	g = g.append(".and(")
-
-	if len(params) > 0 {
-		g = g.append(params[0].String())
-	}
-
-	if len(params) > 1 {
-		for _, v := range params[1:] {
-			g = g.append("," + v.String())
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithTraversalStrings("and", params...)
 
 	return g
 }

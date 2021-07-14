@@ -89,7 +89,7 @@ func (g *String) AddStep(step string, params ...interface{}) {
 		case float32, float64:
 			g.buffer.WriteString(fmt.Sprintf("%vf", t))
 		case string:
-			g.buffer.WriteString("'" + Escape(t) + "'")
+			g.buffer.WriteString(escape(t))
 		default:
 			g.buffer.WriteString(fmt.Sprintf("%v", t))
 		}
@@ -100,6 +100,40 @@ func (g *String) AddStep(step string, params ...interface{}) {
 	g.buffer.WriteString(")")
 
 	g.string += g.buffer.String()
+}
+
+func (g *String) addStepWithStrings(step string, params ...string) {
+	stepParams := make([]interface{}, len(params))
+	for i, p := range params {
+		stepParams[i] = p
+	}
+	g.AddStep(step, stepParams...)
+}
+
+func (g *String) addStepWithInterfaceAndStrings(step string, param interface{}, extra ...string) {
+	stepParams := make([]interface{}, len(extra)+1)
+	stepParams[0] = param
+	for i, p := range extra {
+		stepParams[i+1] = p
+	}
+	g.AddStep(step, stepParams...)
+}
+
+func (g *String) addStepWithTraversalStrings(step string, params ...String) {
+	stepParams := make([]interface{}, len(params))
+	for i, p := range params {
+		stepParams[i] = p
+	}
+	g.AddStep(step, stepParams...)
+}
+
+func (g *String) addStepWithInterfaceAndTraversalStrings(step string, param interface{}, extra ...String) {
+	stepParams := make([]interface{}, len(extra)+1)
+	stepParams[0] = param
+	for i, p := range extra {
+		stepParams[i+1] = p
+	}
+	g.AddStep(step, stepParams...)
 }
 
 func (g *String) commaSeperator(i int, params ...interface{}) {
@@ -119,8 +153,4 @@ func gatherInts(params ...int) string {
 	default:
 		return ""
 	}
-}
-
-func Escape(t string) string {
-	return strings.ReplaceAll(strings.ReplaceAll(t, `\`, `\\`), `'`, `\'`)
 }

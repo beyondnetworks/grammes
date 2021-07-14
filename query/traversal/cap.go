@@ -28,15 +28,7 @@ package traversal
 // Signatures:
 // Cap(string, ...string)
 func (g String) Cap(str string, optStrings ...string) String {
-	g = g.append(".cap('" + str + "'")
-
-	if len(optStrings) > 0 {
-		for _, v := range optStrings {
-			g = g.append(",'" + v + "'")
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithInterfaceAndStrings("cap", str, optStrings...)
 
 	return g
 }

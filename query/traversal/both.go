@@ -22,38 +22,14 @@ package traversal
 
 // Both moves to both the incoming and outgoing adjacent vertices given the edge labels.
 func (g String) Both(labels ...string) String {
-	g = g.append(".both(")
-
-	if len(labels) > 0 {
-		g = g.append("'" + labels[0] + "'")
-
-		if len(labels) > 1 {
-			for _, v := range labels[1:] {
-				g = g.append(",'" + v + "'")
-			}
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithStrings("both", labels...)
 
 	return g
 }
 
 // BothE moves to both the incoming and outgoing incident edges given the edge labels.
 func (g String) BothE(labels ...string) String {
-	g = g.append(".bothE(")
-
-	if len(labels) > 0 {
-		g = g.append("'" + labels[0] + "'")
-
-		if len(labels) > 1 {
-			for _, v := range labels[1:] {
-				g = g.append(",'" + v + "'")
-			}
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithStrings("bothE", labels...)
 
 	return g
 }

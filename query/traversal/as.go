@@ -31,23 +31,11 @@ import "fmt"
 // As(string)
 // As(string, string...)
 func (g String) As(labels ...string) String {
-	g = g.append(".as(")
-
 	if len(labels) < 1 {
 		fmt.Println("Not enough parameters to use As()")
 	}
 
-	if len(labels) > 0 {
-		g = g.append("'" + labels[0] + "'")
-	}
-
-	if len(labels) > 1 {
-		for _, v := range labels[1:] {
-			g = g.append(",'" + v + "'")
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithStrings("as", labels...)
 
 	return g
 }

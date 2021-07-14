@@ -27,13 +27,7 @@ package traversal
 // Or()
 // Or(...*String (Traversal))
 func (g String) Or(traversals ...String) String {
-	var params []interface{}
-
-	for _, t := range traversals {
-		params = append(params, t)
-	}
-
-	g.AddStep("or", params...)
+	g.addStepWithTraversalStrings("or", traversals...)
 
 	return g
 }

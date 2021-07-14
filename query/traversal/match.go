@@ -30,13 +30,7 @@ package traversal
 // Signatures:
 // Match(...*String (Traversal))
 func (g String) Match(traversals ...String) String {
-	var params []interface{}
-
-	for _, t := range traversals {
-		params = append(params, t)
-	}
-
-	g.AddStep("match", params...)
+	g.addStepWithTraversalStrings("match", traversals...)
 
 	return g
 }

@@ -45,8 +45,8 @@ func TestOption(t *testing.T) {
 
 		Convey("When 'Option' is called with too many params params", func() {
 			result := g.Option("obj1", "obj2", "obj3")
-			Convey("Then result should equal 'g.option('obj1','obj1','obj2','obj3')'", func() {
-				So(result.String(), ShouldEqual, "g.option('obj1','obj1','obj2','obj3')")
+			Convey("Then result should equal 'g.option('obj1','obj2','obj3')'", func() {
+				So(result.String(), ShouldEqual, "g.option('obj1','obj2','obj3')")
 			})
 		})
 	})

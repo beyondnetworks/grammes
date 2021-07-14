@@ -30,13 +30,7 @@ package traversal
 // Union()
 // Union(...*String (Traversal))
 func (g String) Union(traversals ...String) String {
-	var params []interface{}
-
-	for _, t := range traversals {
-		params = append(params, t)
-	}
-
-	g.AddStep("union", params...)
+	g.addStepWithTraversalStrings("union", traversals...)
 
 	return g
 }

@@ -31,10 +31,6 @@ package traversal
 // By(string)
 // By(...interface{})
 func (g String) By(params ...interface{}) String {
-	if len(params) < 1 {
-		g = g.append(".by()")
-		return g
-	}
 	g.AddStep("by", params...)
 
 	return g

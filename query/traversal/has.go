@@ -60,15 +60,7 @@ func (g String) Has(first interface{}, params ...interface{}) String {
 // HasID(string (Object), ...string (Object))
 // HasID(string (P))
 func (g String) HasID(objOrP interface{}, objs ...string) String {
-	var p []interface{}
-
-	p = append(p, objOrP)
-
-	for _, s := range objs {
-		p = append(p, s)
-	}
-
-	g.AddStep("hasId", p...)
+	g.addStepWithInterfaceAndStrings("hasId", objOrP, objs...)
 
 	return g
 }
@@ -79,20 +71,7 @@ func (g String) HasID(objOrP interface{}, objs ...string) String {
 // HasKey(string (Predicate))
 // HasKey(string, ...string)
 func (g String) HasKey(pOrStr interface{}, handledStrings ...string) String {
-	switch pOrStr.(type) {
-	case string:
-		g = g.append(".hasKey('" + pOrStr.(string) + "'")
-	default:
-		g = g.append(fmtStr(".hasKey(%v", pOrStr))
-	}
-
-	if len(handledStrings) > 0 {
-		for _, v := range handledStrings {
-			g = g.append(",'" + v + "'")
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithInterfaceAndStrings("hasKey", pOrStr, handledStrings...)
 
 	return g
 }
@@ -103,20 +82,7 @@ func (g String) HasKey(pOrStr interface{}, handledStrings ...string) String {
 // HasLabel(string (Predicate))
 // HasLabel(string, ...string)
 func (g String) HasLabel(pOrStr interface{}, handledStrings ...string) String {
-	switch pOrStr.(type) {
-	case string:
-		g = g.append(".hasLabel('" + pOrStr.(string) + "'")
-	default:
-		g = g.append(fmtStr(".hasLabel(%v", pOrStr))
-	}
-
-	if len(handledStrings) > 0 {
-		for _, v := range handledStrings {
-			g = g.append(",'" + v + "'")
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithInterfaceAndStrings("hasLabel", pOrStr, handledStrings...)
 
 	return g
 }
@@ -137,20 +103,7 @@ func (g String) HasNot(str string) String {
 // HasValue(string (Object), ...string (Object))
 // HasValue(string (P))
 func (g String) HasValue(objOrP interface{}, objs ...string) String {
-	switch objOrP.(type) {
-	case string:
-		g = g.append(".hasValue('" + objOrP.(string) + "'")
-	default:
-		g = g.append(fmtStr(".hasValue(%v", objOrP))
-	}
-
-	if len(objs) > 0 {
-		for _, v := range objs {
-			g = g.append(",'" + v + "'")
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithInterfaceAndStrings("hasValue", objOrP, objs...)
 
 	return g
 }

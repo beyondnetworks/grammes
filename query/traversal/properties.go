@@ -27,19 +27,7 @@ package traversal
 // Properties()
 // Properties(...string)
 func (g String) Properties(str ...string) String {
-	if len(str) < 1 {
-		g.AddStep("properties")
-	} else {
-		g = g.append(".properties('" + Escape(str[0]) + "'")
-
-		if len(str) > 1 {
-			for _, v := range str[1:] {
-				g = g.append(",'" + Escape(v) + "'")
-			}
-		}
-
-		g = g.append(")")
-	}
+	g.addStepWithStrings("properties", str...)
 
 	return g
 }

@@ -27,19 +27,7 @@ package traversal
 // Signatures:
 // Coalesce(...*String (Traversal))
 func (g String) Coalesce(traversals ...String) String {
-	g = g.append(".coalesce(")
-
-	if len(traversals) > 0 {
-		g = g.append(traversals[0].String())
-	}
-
-	if len(traversals) > 1 {
-		for _, v := range traversals[1:] {
-			g = g.append("," + v.String())
-		}
-	}
-
-	g = g.append(")")
+	g.addStepWithTraversalStrings("coalesce", traversals...)
 
 	return g
 }

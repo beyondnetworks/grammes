@@ -41,11 +41,5 @@ func TestAddE(t *testing.T) {
 				So(res.String(), ShouldEqual, "g.addE('somethingelse')")
 			})
 		})
-		Convey("When 'AddE' is called with anything else", func() {
-			res := g.AddE(1234)
-			Convey("Then the graph traversal should be 'g.addE()'", func() {
-				So(res.String(), ShouldEqual, "g.addE()")
-			})
-		})
 	})
 }
